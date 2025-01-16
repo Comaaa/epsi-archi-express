@@ -1,19 +1,13 @@
 export default class Order {
-  id: number;
-
+  id: string;
   createdAt: Date;
-
   total: number;
-
   customer: number;
-
-  products: [];
-
+  products: any[];
   status: string;
-
   paidAt: Date;
 
-  constructor(customerId: number, products: []) {
+  constructor(customerId: number, products: any[]) {
     if (!customerId) {
       throw new Error("customerId is required");
     }
@@ -26,13 +20,10 @@ export default class Order {
     this.customer = customerId;
     this.products = products;
     this.status = "cart";
-
-    this.total = products.reduce((acc, product) => {
-      return acc + 5;
-    }, 0);
+    this.total = products.reduce((acc, product) => acc + 5, 0);
   }
 
-  getId(): number {
+  getId(): string {
     return this.id;
   }
 
@@ -55,5 +46,13 @@ export default class Order {
 
     this.status = "paid";
     this.paidAt = new Date();
+  }
+
+  cancel(): void {
+    if (this.status === "canceled") {
+      throw new Error("Order is already canceled");
+    }
+
+    this.status = "canceled";
   }
 }

@@ -19,7 +19,7 @@ router.post("", (request, response) => {
 });
 
 router.patch("/:orderId/pay", (request, response) => {
-  const orderId = parseInt(request.params.orderId);
+  const orderId = request.params.orderId;
 
   const payOrderUseCase = new PayOrderUseCase();
 

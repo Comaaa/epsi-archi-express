@@ -3,20 +3,13 @@ import OrderRepository from "../infrastructure/order.repository";
 import { OrderContainer } from "../order.container";
 
 export class PayOrderUseCase {
-  // je créé une propriété privée orderRepository de type OrderRepository
   private orderRepository: OrderRepository;
 
-  // je créé un constructeur, qui est appelé automatiquement
-  // quand la classe PayOrderUseCase est instanciée
-  // mon constructeur ici récupère l'instance de OrderRepository
-  // depuis le container
-  // et la stocke dans la propriété orderRepository
   constructor() {
     this.orderRepository = OrderContainer.getOrderRepository();
   }
 
-  payOrder(orderId: number): Order {
-    // j'utilise la propriété orderRepository
+  payOrder(orderId: string): Order {
     const order = this.orderRepository.findById(orderId);
 
     if (!order) {
@@ -25,7 +18,7 @@ export class PayOrderUseCase {
 
     order.pay();
 
-    const orderUpdated = orderRepository.update(order);
+    const orderUpdated = this.orderRepository.save(order);
 
     return orderUpdated;
   }
